@@ -7,11 +7,11 @@ const schema = z.object({
     height: z
         .number({ invalid_type_error: "Height is required." })
         .min(1, { message: "Height must be at least 1." })
-        .max(500),
+        .max(75, { message: "Height must be less or equal to 75." }),
     width: z
         .number({ invalid_type_error: "Width is required." })
         .min(1, { message: "Width must be at least 1." })
-        .max(500),
+        .max(75, { message: "Width must be less or equal to 75." }),
     players: z
         .number({ invalid_type_error: "Players are required." })
         .min(2, { message: "Players must be at least 2." })
@@ -40,7 +40,7 @@ export const GameForm = ({ onSubmit }: Props) => {
             onSubmit={handleSubmit((data) => {
                 onSubmit(data);
             })}
-            className='mt-5'
+            className='mt-5 d-flex flex-column align-items-center'
         >
             <div className="mb-3">
                 <label htmlFor="height" className="form-label">
@@ -98,7 +98,7 @@ export const GameForm = ({ onSubmit }: Props) => {
                     <p className="text-danger">{errors.cellsToWin.message}</p>
                 )}
             </div>
-            <button className="btn btn-primary">Submit</button>
+            <button className="btn btn-primary w-25 mb-3">Play</button>
         </form>
     );
 };
