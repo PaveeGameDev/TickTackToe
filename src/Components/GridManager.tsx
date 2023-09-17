@@ -114,7 +114,6 @@ export const GridManager = ({x, y, players, winLength, onWin, winner, resetGrid,
 
     if (players >= playerNames.length) return <p>Too much players</p>;
 
-
     return (
         <div className='overflow-hidden border-black border-1 border rounded-5'>
             <table>
