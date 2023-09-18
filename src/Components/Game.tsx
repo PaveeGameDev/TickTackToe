@@ -1,4 +1,4 @@
-import {GridManager} from "./GridManager";
+import {GridManager, playerNames} from "./GridManager";
 import React, {useEffect, useState} from "react";
 
 type Props = {
@@ -8,17 +8,11 @@ type Props = {
     cellsToWin: number,
     resetGrid: boolean,
     setResetGrid: React.Dispatch<React.SetStateAction<boolean>>
-    quickGame: boolean,
-    setQuickGame: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const Game = ({players,height,cellsToWin,width, resetGrid, setResetGrid, quickGame, setQuickGame}:Props) => {
+export const Game = ({players,height,cellsToWin,width, resetGrid, setResetGrid}:Props) => {
 
     const [winner, setWinner] = useState('');
-    const [playerCount, setPlayerCount] = useState(players);
-    const [winLengthCount, setWinLengthCount] = useState(cellsToWin);
-    const [widthCount, setWidthCount] = useState(width)
-    const [heightCount, setHeightCount] = useState(height)
 
     const onReset = () => {
         setResetGrid(true);
@@ -32,24 +26,13 @@ export const Game = ({players,height,cellsToWin,width, resetGrid, setResetGrid, 
         setResetGrid(false);
     }
 
-    useEffect(() => {
-        if(quickGame){
-            setPlayerCount(2);
-            setWinLengthCount(3);
-            setHeightCount(3)
-            setWidthCount(3)
-
-        }
-        setQuickGame(false);
-    }, [quickGame])
-
     return (
         <div className='mt-5'>
             {winner && <p className='text-success display-5 h-auto'>{winner} has won</p>}
-            {height > 0 && <GridManager players={playerCount}
-                          x={widthCount}
-                          y={heightCount}
-                          winLength={winLengthCount}
+            {height > 0 && <GridManager players={players}
+                          x={width}
+                          y={height}
+                          winLength={cellsToWin}
                           setWinner={setWinner}
                           winner={winner.length > 0}
                           resetGrid={resetGrid}

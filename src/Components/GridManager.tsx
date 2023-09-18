@@ -30,7 +30,6 @@ export const playerNames = [
 export const GridManager = ({x, y, players, winLength, setWinner, winner, resetGrid, resetGridComplete}: Props) => {
 
 
-
     const [currentPlayer, setCurrentPlayer] = useState(0);
 
     const [grid, setGrid] = useState<number[][]>([[]])
@@ -44,9 +43,8 @@ export const GridManager = ({x, y, players, winLength, setWinner, winner, resetG
     }, [resetGrid, x, y, players, winLength])
 
 
-
     const onClick = (id: number[]) => {
-        if(grid[id[0]][id[1]] !== 0) return;
+        if (grid[id[0]][id[1]] !== 0) return;
         setGrid(grid.map((row, index) => row.map((cell, indexCell) => indexCell === id[1] && index === id[0] ? currentPlayer : cell)))
         if (countWin(id, winLength)) setWinner(playerNames[currentPlayer]);
         setCurrentPlayer(currentPlayer % players + 1);
@@ -107,21 +105,17 @@ export const GridManager = ({x, y, players, winLength, setWinner, winner, resetG
     }
 
     const checkCell = (id: number[], currentPlayer: number): boolean => {
-        if (grid[id[0]]) {
-            return grid[id[0]][id[1]] === currentPlayer;
-        }
-        return false;
+        return grid[id[0]] && grid[id[0]][id[1]] === currentPlayer;
     }
-
-    if (players >= playerNames.length) return <p>Too much players</p>;
 
     return (
         <div className='overflow-hidden border-black border-1 border rounded-5'>
             <table>
-                <tbody >
-                {grid.map((row, index) => <tr key={index} className='d-flex'>{row.map((cell, indexCell) => <Block
-                    key={indexCell} user={playerNames[row[indexCell]]}
-                    id={[index, indexCell]} disabled={winner} onclick={onClick}/>)}</tr>)}
+                <tbody>
+                {grid.map((row, indexRow) => <tr key={indexRow} className='d-flex'>{row.map((cell, indexColumn) =>
+                    <Block
+                        key={indexColumn} user={playerNames[row[indexColumn]]}
+                        id={[indexRow, indexColumn]} disabled={winner} onclick={onClick}/>)}</tr>)}
                 </tbody>
             </table>
         </div>
